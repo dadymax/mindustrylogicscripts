@@ -1,0 +1,209 @@
+if switch1.enabled == true 
+	//clear message1 text
+	printflush(message1)
+	print("Working...")
+	printflush(message1)
+	memorymodule_main = cell1
+	memorymodule_unit = cell2
+	memorymodule_ore = cell3
+	memorymodule_function = cell4
+	INITSTRING="init done"
+	DATEOFSCRIPTCONSTANTSANDMAPS="Date: 2022-08-15"
+
+	allocate heap in memorymodule_main[32 ... 64]
+	allocate stack in memorymodule_function[0 ... 64]
+	def getresources(name)
+		iterator_unit = 2
+		iterator_unit_count_max = memorymodule_unit[1]
+		iterator_unit_count = 0;
+		while iterator_unit_count < iterator_unit_count_max
+			iterator_unit_count += 1			
+			if name == memorymodule_unit[iterator_unit]				
+				positionofresourcestmp = iterator_unit + 1
+				$RESULTofgetresources = positionofresourcestmp
+				iterator_unit_count = iterator_unit_count_max
+			else
+				iterator_unit += 1
+				countofres = memorymodule_unit[iterator_unit]
+				countofres = countofres * 2
+				iterator_unit += countofres
+				iterator_unit += 1
+			end			
+		end
+
+	end
+	//just init some value for heap alloc happen
+	//teble in format:
+	//name
+	//resourcecount
+	//resource1name
+	//resource1count
+	//resource2name
+	//...
+	//if memorymodule_unit[0] != INITSTRING
+		memorymodule_unit[1] = 6
+		memorymodule_unit[2] = 99880001//@dagger
+		memorymodule_unit[3] = 2
+		memorymodule_unit[4] = 9988770010//@silicon
+		memorymodule_unit[5] = 10
+		memorymodule_unit[6] = 9988770002//@lead
+		memorymodule_unit[7] = 10
+		memorymodule_unit[8] = 99880002//"crawler"
+		memorymodule_unit[9] = 2
+		memorymodule_unit[10] = 9988770010//@silicon
+		memorymodule_unit[11] = 8
+		memorymodule_unit[12] = 9988770006//@coal
+		memorymodule_unit[13] = 10
+		memorymodule_unit[14] = 99880003//nova
+		memorymodule_unit[15] = 3
+		memorymodule_unit[16] = 9988770010//@silicon
+		memorymodule_unit[17] = 30
+		memorymodule_unit[18] = 9988770002//@lead
+		memorymodule_unit[19] = 20
+		memorymodule_unit[20] = 9988770007//@titanium
+		memorymodule_unit[21] = 20
+		memorymodule_unit[22] = 99880004//flare
+		memorymodule_unit[23] = 1
+		memorymodule_unit[24] = 9988770010//@silicon
+		memorymodule_unit[25] = 15
+		memorymodule_unit[26] = 99880005//mono
+		memorymodule_unit[27] = 2
+		memorymodule_unit[28] = 9988770010//@silicon
+		memorymodule_unit[29] = 30
+		memorymodule_unit[30] = 9988770002//@lead
+		memorymodule_unit[31] = 15
+		memorymodule_unit[32] = 99880006//risso
+		memorymodule_unit[33] = 2
+		memorymodule_unit[34] = 9988770010//@silicon
+		memorymodule_unit[35] = 20
+		memorymodule_unit[36] = 9988770003//@metaglass
+		memorymodule_unit[37] = 35
+
+		memorymodule_unit[63] = DATEOFSCRIPTCONSTANTSANDMAPS
+		//memorymodule_unit[0] = INITSTRING
+	//end
+
+
+	//if memorymodule_ore[0] != INITSTRING
+		memorymodule_ore[1] = 16	
+		memorymodule_ore[2] = 9988770001//@copper
+		memorymodule_ore[3] = 9988770002//@lead
+		memorymodule_ore[4] = 9988770003//@metaglass
+		memorymodule_ore[5] = 9988770004//@graphite
+		memorymodule_ore[6] = 9988770005//@sand
+		memorymodule_ore[7] = 9988770006//@coal
+		memorymodule_ore[8] = 9988770007//@titanium
+		memorymodule_ore[9] = 9988770008//@thorium
+		memorymodule_ore[10] = 9988770009//@scrap
+		memorymodule_ore[11] = 9988770010//@silicon
+		memorymodule_ore[12] = 9988770011//@plastanium
+		memorymodule_ore[13] = 9988770012//@phase-fab
+		memorymodule_ore[14] = 9988770013//@surge-alloy
+		memorymodule_ore[15] = 9988770014//@spore-pod
+		memorymodule_ore[16] = 9988770015//@blast-compound
+		memorymodule_ore[17] = 9988770016//@pyratite
+		
+		memorymodule_ore[63] = DATEOFSCRIPTCONSTANTSANDMAPS
+		//memorymodule_ore[0] = INITSTRING
+	//end
+
+	ubind(@flare)
+
+	if @unit == null //if no flares - no cargo's can be delivered
+		ulocate(building, core, false, outx, outy, variablecore)
+
+		//Main loop over all connected factory buildings
+		iterator_link = 0
+		bldng = getlink(iterator_link)
+		while bldng != null
+			bldngtype = bldng.type
+			//not sure next line will work or not
+			if bldngtype == @ground-factory or bldngtype == @air-factory or bldngtype == @naval-factory 
+				unit2bld = bldng.sensor(@config)			
+				unit2bldnum = case unit2bld
+					when @dagger
+						99880001
+					when @crawler
+						99880002
+					when @nova
+						99880003
+					when @flare
+						99880004
+					when @mono
+						99880005
+					when @risso
+						99880006
+					else
+						0
+				end
+				if unit2bldnum != 0
+					print("Found production: ")
+					print(unit2bld)
+					getresources(unit2bldnum)
+					positionofresources = $RESULTofgetresources
+					rescountTotal = memorymodule_unit[positionofresources]
+					bldngResCapacity = bldng.sensor(@itemCapacity)
+					resiter = 0
+					while resiter < rescountTotal
+						tmpmy1 = 1 + resiter * 2
+						restocollectnumber = positionofresources + tmpmy1
+						resnumber = memorymodule_unit[restocollectnumber]
+						restocollectcountnumber = restocollectnumber + 1
+						rescount = memorymodule_unit[restocollectcountnumber]
+						resiter += 1
+						resname = case resnumber
+							when 9988770001
+								@copper
+							when 9988770002
+								@lead
+							when 9988770003
+								@metaglass
+							when 9988770004
+								@graphite
+							when 9988770005
+								@sand
+							when 9988770006
+								@coal
+							when 9988770007
+								@titanium
+							when 9988770008
+								@thorium
+							when 9988770009
+								@scrap
+							when 9988770010
+								@silicon
+							when 9988770011
+								@plastanium
+							when 9988770012
+								@phase-fab
+							when 9988770013
+								@surge-alloy
+							when 9988770014
+								@spore-pod
+							when 9988770015
+								@blast-compound
+							when 9988770016
+								@pyratite
+						end
+						bldngrescount = bldng.sensor(resname)
+						resToDelivery = bldngResCapacity - bldngrescount						
+						while resToDelivery != 0
+							ubind(@flare)
+							if @unit != null
+								if @unit.controlled == 0 //no one use it
+									if @unit.totalItems == 0 //it has no orders
+
+									end
+								end
+							end
+						end
+					end
+					print("\n")	
+				end		
+			end
+			iterator_link += 1
+			bldng = getlink(iterator_link)
+		end
+		printflush(message1)
+	end
+end
