@@ -51,7 +51,7 @@ if switch1.enabled == true
 	end
 
 	def pauseForTime(timeInSeconds, usedTicks)		
-		instructioncount = timeInSeconds * @ipt * 30	
+		instructioncount = timeInSeconds * @ipt * 25	
 		// print(" delay instructs: ")	
 		// print(instructioncount)
 		// printflush(message6)
@@ -240,7 +240,7 @@ if switch1.enabled == true
 						print(" ")
 						print(resToDelivery)
 						printflush(message4)			
-						while resToDelivery > 0							
+						while resToDelivery > 0	and switch1.enabled == true						
 							ubind(@flare)
 							if @unit != null
 								if @unit.controlled == 0 //no one use it
@@ -261,11 +261,11 @@ if switch1.enabled == true
 										// printflush(message5)
 										pauseForTime(time, 10)
 										itemDrop(variablecore, @unit.totalItems)
-										pauseForTime(1, 2)
+										pauseForTime(2, 2)
 										// print("Item take...")
 										// printflush(message5)
 										itemTake(variablecore, resname, @unit.itemCapacity)
-										pauseForTime(1, 2)
+										pauseForTime(2, 2)
 										// print("Approach to factory...")
 										// printflush(message5)
 										approach(bldngx, bldngy, 6)
