@@ -1,6 +1,13 @@
+printflush(message1)
+printflush(message2)
+printflush(message3)
+printflush(message4)
+printflush(message5)
+print(@ipt)
+printflush(message6)
+
 if switch1.enabled == true 
 	//clear message1 text
-	printflush(message1)
 	print("Working...")
 	printflush(message1)
 	memorymodule_main = cell1
@@ -30,7 +37,30 @@ if switch1.enabled == true
 				iterator_unit += 1
 			end			
 		end
+	end
 
+	def getdistance(x1,y1,x2,y2)
+		diffx = x2 - x1
+		diffy = y2 - y1
+		diffx = diffx * diffx
+		diffy = diffy * diffy
+		tmpmy2 = diffx + diffy
+		tmpmy2 = sqrt (tmpmy2)
+		tmpmy2 = floor (tmpmy2)
+		$RESULTofgetdistance = tmpmy2
+	end
+
+	def pauseForTime(timeInSeconds, usedTicks)		
+		instructioncount = timeInSeconds * @ipt * 30	
+		// print(" delay instructs: ")	
+		// print(instructioncount)
+		// printflush(message6)
+		looper = usedTicks
+		while looper < instructioncount
+			// print(looper)
+			// printflush(message7)
+			looper += 1
+		end
 	end
 	//just init some value for heap alloc happen
 	//teble in format:
@@ -108,15 +138,27 @@ if switch1.enabled == true
 	//end
 
 	ubind(@flare)
-
-	if @unit == null //if no flares - no cargo's can be delivered
-		ulocate(building, core, false, outx, outy, variablecore)
+	
+	if @unit != null //if no flares - no cargo's can be delivered
+		ulocate(building, core, false, corex, corey, variablecore)
+		print("Core: ")
+		print(corex)
+		print(" ")
+		print(corey)
+		printflush(message2)
 
 		//Main loop over all connected factory buildings
 		iterator_link = 0
 		bldng = getlink(iterator_link)
 		while bldng != null
 			bldngtype = bldng.type
+			bldngx = bldng.x
+			bldngy = bldng.y
+			print("bldng: ")
+			print(bldngx)
+			print(" ")
+			print(bldngy)
+			printflush(message3)			
 			//not sure next line will work or not
 			if bldngtype == @ground-factory or bldngtype == @air-factory or bldngtype == @naval-factory 
 				unit2bld = bldng.sensor(@config)			
@@ -139,6 +181,8 @@ if switch1.enabled == true
 				if unit2bldnum != 0
 					print("Found production: ")
 					print(unit2bld)
+					print("\n")
+					printflush(message1)
 					getresources(unit2bldnum)
 					positionofresources = $RESULTofgetresources
 					rescountTotal = memorymodule_unit[positionofresources]
@@ -186,19 +230,62 @@ if switch1.enabled == true
 								@pyratite
 						end
 						bldngrescount = bldng.sensor(resname)
-						resToDelivery = bldngResCapacity - bldngrescount						
-						while resToDelivery != 0
+						resToDelivery = bldngResCapacity - bldngrescount	
+						print("Res2Delivery: ")					
+						print(resnumber)
+						print(" ")
+						print(bldngResCapacity)
+						print(" ")
+						print(bldngrescount)
+						print(" ")
+						print(resToDelivery)
+						printflush(message4)			
+						while resToDelivery > 0							
 							ubind(@flare)
 							if @unit != null
 								if @unit.controlled == 0 //no one use it
-									if @unit.totalItems == 0 //it has no orders
-
+									if @unit.flag == 0 //it has no flag/order
+										flag(9988776600)										
+										// print("Approach to core...")
+										
+										approach(corex, corey, 6)										
+										unitx = @unit.x
+										unity = @unit.y
+										getdistance(unitx, unity, corex, corey)
+										dist = $RESULTofgetdistance
+										time = dist \ 20.25 //flare has speed of 20.25
+										// print(" Dist: ")
+										// print(dist)
+										// print(" Time: ")
+										// print(time)
+										// printflush(message5)
+										pauseForTime(time, 10)
+										itemDrop(variablecore, @unit.totalItems)
+										pauseForTime(1, 2)
+										// print("Item take...")
+										// printflush(message5)
+										itemTake(variablecore, resname, @unit.itemCapacity)
+										pauseForTime(1, 2)
+										// print("Approach to factory...")
+										// printflush(message5)
+										approach(bldngx, bldngy, 6)
+										unitx = @unit.x
+										unity = @unit.y
+										getdistance(unitx, unity, bldngx, bldngy)
+										dist = $RESULTofgetdistance										
+										time = dist \ 20.25
+										pauseForTime(time, 10)
+										// print("Item drop...")
+										// printflush(message5)
+										resToDelivery = resToDelivery - @unit.totalItems
+										itemDrop(bldng, @unit.totalItems)
+										pauseForTime(1, 2)										
+										flag(0) //drop flag at end of operation
 									end
 								end
 							end
 						end
-					end
-					print("\n")	
+					end						
 				end		
 			end
 			iterator_link += 1

@@ -1,0 +1,504 @@
+printflush message1
+printflush message2
+printflush message3
+printflush message4
+printflush message5
+print @ipt
+printflush message6
+sensor __tmp0 switch1 @enabled
+jump 407 notEqual __tmp0 true
+print "Working..."
+printflush message1
+set memorymodule_main cell1
+set memorymodule_unit cell2
+set memorymodule_ore cell3
+set memorymodule_function cell4
+set DATEOFSCRIPTCONSTANTSANDMAPS "Date: 2022-08-15"
+write 63 memorymodule_function 63
+write 6 memorymodule_unit 1
+write 99880001 memorymodule_unit 2
+write 2 memorymodule_unit 3
+write 9988770010 memorymodule_unit 4
+write 10 memorymodule_unit 5
+write 9988770002 memorymodule_unit 6
+write 10 memorymodule_unit 7
+write 99880002 memorymodule_unit 8
+write 2 memorymodule_unit 9
+write 9988770010 memorymodule_unit 10
+write 8 memorymodule_unit 11
+write 9988770006 memorymodule_unit 12
+write 10 memorymodule_unit 13
+write 99880003 memorymodule_unit 14
+write 3 memorymodule_unit 15
+write 9988770010 memorymodule_unit 16
+write 30 memorymodule_unit 17
+write 9988770002 memorymodule_unit 18
+write 20 memorymodule_unit 19
+write 9988770007 memorymodule_unit 20
+write 20 memorymodule_unit 21
+write 99880004 memorymodule_unit 22
+write 1 memorymodule_unit 23
+write 9988770010 memorymodule_unit 24
+write 15 memorymodule_unit 25
+write 99880005 memorymodule_unit 26
+write 2 memorymodule_unit 27
+write 9988770010 memorymodule_unit 28
+write 30 memorymodule_unit 29
+write 9988770002 memorymodule_unit 30
+write 15 memorymodule_unit 31
+write 99880006 memorymodule_unit 32
+write 2 memorymodule_unit 33
+write 9988770010 memorymodule_unit 34
+write 20 memorymodule_unit 35
+write 9988770003 memorymodule_unit 36
+write 35 memorymodule_unit 37
+write DATEOFSCRIPTCONSTANTSANDMAPS memorymodule_unit 63
+write 16 memorymodule_ore 1
+write 9988770001 memorymodule_ore 2
+write 9988770002 memorymodule_ore 3
+write 9988770003 memorymodule_ore 4
+write 9988770004 memorymodule_ore 5
+write 9988770005 memorymodule_ore 6
+write 9988770006 memorymodule_ore 7
+write 9988770007 memorymodule_ore 8
+write 9988770008 memorymodule_ore 9
+write 9988770009 memorymodule_ore 10
+write 9988770010 memorymodule_ore 11
+write 9988770011 memorymodule_ore 12
+write 9988770012 memorymodule_ore 13
+write 9988770013 memorymodule_ore 14
+write 9988770014 memorymodule_ore 15
+write 9988770015 memorymodule_ore 16
+write 9988770016 memorymodule_ore 17
+write DATEOFSCRIPTCONSTANTSANDMAPS memorymodule_ore 63
+ubind @flare
+jump 406 equal @unit null
+ulocate building core false @copper corex corey __tmp120 variablecore
+print "Core: "
+print corex
+print " "
+print corey
+printflush message2
+set iterator_link 0
+getlink bldng iterator_link
+jump 404 equal bldng null
+sensor bldngtype bldng @type
+sensor bldngx bldng @x
+sensor bldngy bldng @y
+print "bldng: "
+print bldngx
+print " "
+print bldngy
+printflush message3
+op equal __tmp131 bldngtype @ground-factory
+op equal __tmp132 bldngtype @air-factory
+op or __tmp133 __tmp131 __tmp132
+op equal __tmp134 bldngtype @naval-factory
+op or __tmp135 __tmp133 __tmp134
+jump 401 notEqual __tmp135 true
+sensor unit2bld bldng @config
+set ast0 unit2bld
+jump 103 notEqual ast0 @dagger
+set __tmp138 99880001
+jump 119 always 0 0
+jump 106 notEqual ast0 @crawler
+set __tmp138 99880002
+jump 119 always 0 0
+jump 109 notEqual ast0 @nova
+set __tmp138 99880003
+jump 119 always 0 0
+jump 112 notEqual ast0 @flare
+set __tmp138 99880004
+jump 119 always 0 0
+jump 115 notEqual ast0 @mono
+set __tmp138 99880005
+jump 119 always 0 0
+jump 118 notEqual ast0 @risso
+set __tmp138 99880006
+jump 119 always 0 0
+set __tmp138 0
+set unit2bldnum __tmp138
+jump 400 equal unit2bldnum 0
+print "Found production: "
+print unit2bld
+print "\n"
+printflush message1
+read __tmp151 memorymodule_function 63
+op sub __tmp151 __tmp151 1
+write 134 memorymodule_function __tmp151
+write __tmp151 memorymodule_function 63
+read __tmp157 memorymodule_function 63
+op sub __tmp157 __tmp157 1
+write unit2bldnum memorymodule_function __tmp157
+write __tmp157 memorymodule_function 63
+set @counter 434
+read __tmp164 memorymodule_function 63
+op add __tmp164 __tmp164 1
+write __tmp164 memorymodule_function 63
+read positionofresources memorymodule_main 32
+read rescountTotal memorymodule_unit positionofresources
+sensor bldngResCapacity bldng @itemCapacity
+set resiter 0
+jump 399 greaterThanEq resiter rescountTotal
+set __tmp177 1
+op mul __tmp179 resiter 2
+op add __tmp180 __tmp177 __tmp179
+set tmpmy1 __tmp180
+op add restocollectnumber positionofresources tmpmy1
+read resnumber memorymodule_unit restocollectnumber
+op add resiter resiter 1
+set ast1 resnumber
+set __tmp189 9988770001
+jump 154 notEqual ast1 __tmp189
+set __tmp188 @copper
+jump 215 always 0 0
+set __tmp190 9988770002
+jump 158 notEqual ast1 __tmp190
+set __tmp188 @lead
+jump 215 always 0 0
+set __tmp191 9988770003
+jump 162 notEqual ast1 __tmp191
+set __tmp188 @metaglass
+jump 215 always 0 0
+set __tmp192 9988770004
+jump 166 notEqual ast1 __tmp192
+set __tmp188 @graphite
+jump 215 always 0 0
+set __tmp193 9988770005
+jump 170 notEqual ast1 __tmp193
+set __tmp188 @sand
+jump 215 always 0 0
+set __tmp194 9988770006
+jump 174 notEqual ast1 __tmp194
+set __tmp188 @coal
+jump 215 always 0 0
+set __tmp195 9988770007
+jump 178 notEqual ast1 __tmp195
+set __tmp188 @titanium
+jump 215 always 0 0
+set __tmp196 9988770008
+jump 182 notEqual ast1 __tmp196
+set __tmp188 @thorium
+jump 215 always 0 0
+set __tmp197 9988770009
+jump 186 notEqual ast1 __tmp197
+set __tmp188 @scrap
+jump 215 always 0 0
+set __tmp198 9988770010
+jump 190 notEqual ast1 __tmp198
+set __tmp188 @silicon
+jump 215 always 0 0
+set __tmp199 9988770011
+jump 194 notEqual ast1 __tmp199
+set __tmp188 @plastanium
+jump 215 always 0 0
+set __tmp200 9988770012
+jump 198 notEqual ast1 __tmp200
+set __tmp188 @phase-fab
+jump 215 always 0 0
+set __tmp201 9988770013
+jump 202 notEqual ast1 __tmp201
+set __tmp188 @surge-alloy
+jump 215 always 0 0
+set __tmp202 9988770014
+jump 206 notEqual ast1 __tmp202
+set __tmp188 @spore-pod
+jump 215 always 0 0
+set __tmp203 9988770015
+jump 210 notEqual ast1 __tmp203
+set __tmp188 @blast-compound
+jump 215 always 0 0
+set __tmp204 9988770016
+jump 214 notEqual ast1 __tmp204
+set __tmp188 @pyratite
+jump 215 always 0 0
+set __tmp188 null
+set resname __tmp188
+sensor bldngrescount bldng resname
+op sub resToDelivery bldngResCapacity bldngrescount
+print "Res2Delivery: "
+print resnumber
+print " "
+print bldngResCapacity
+print " "
+print bldngrescount
+print " "
+print resToDelivery
+printflush message4
+jump 398 lessThanEq resToDelivery 0
+ubind @flare
+jump 397 equal @unit null
+sensor __tmp215 @unit @controlled
+jump 396 notEqual __tmp215 0
+sensor __tmp219 @unit @flag
+jump 395 notEqual __tmp219 0
+set __tmp223 9988776600
+ucontrol flag __tmp223 0 0 0 0
+set __tmp224 6
+ucontrol approach corex corey __tmp224 0 0
+sensor unitx @unit @x
+sensor unity @unit @y
+read __tmp227 memorymodule_function 63
+op sub __tmp227 __tmp227 1
+write 261 memorymodule_function __tmp227
+write __tmp227 memorymodule_function 63
+read __tmp233 memorymodule_function 63
+op sub __tmp233 __tmp233 1
+write unitx memorymodule_function __tmp233
+write __tmp233 memorymodule_function 63
+read __tmp239 memorymodule_function 63
+op sub __tmp239 __tmp239 1
+write unity memorymodule_function __tmp239
+write __tmp239 memorymodule_function 63
+read __tmp245 memorymodule_function 63
+op sub __tmp245 __tmp245 1
+write corex memorymodule_function __tmp245
+write __tmp245 memorymodule_function 63
+read __tmp251 memorymodule_function 63
+op sub __tmp251 __tmp251 1
+write corey memorymodule_function __tmp251
+write __tmp251 memorymodule_function 63
+set @counter 466
+read __tmp258 memorymodule_function 63
+op add __tmp258 __tmp258 1
+write __tmp258 memorymodule_function 63
+read dist memorymodule_main 33
+op idiv time dist 20.25
+set __tmp269 10
+read __tmp270 memorymodule_function 63
+op sub __tmp270 __tmp270 1
+write 280 memorymodule_function __tmp270
+write __tmp270 memorymodule_function 63
+read __tmp276 memorymodule_function 63
+op sub __tmp276 __tmp276 1
+write time memorymodule_function __tmp276
+write __tmp276 memorymodule_function 63
+read __tmp282 memorymodule_function 63
+op sub __tmp282 __tmp282 1
+write __tmp269 memorymodule_function __tmp282
+write __tmp282 memorymodule_function 63
+set @counter 408
+read __tmp289 memorymodule_function 63
+op add __tmp289 __tmp289 1
+write __tmp289 memorymodule_function 63
+sensor __tmp296 @unit @totalItems
+ucontrol itemDrop variablecore __tmp296 0 0 0
+set __tmp297 1
+set __tmp298 2
+read __tmp299 memorymodule_function 63
+op sub __tmp299 __tmp299 1
+write 300 memorymodule_function __tmp299
+write __tmp299 memorymodule_function 63
+read __tmp305 memorymodule_function 63
+op sub __tmp305 __tmp305 1
+write __tmp297 memorymodule_function __tmp305
+write __tmp305 memorymodule_function 63
+read __tmp311 memorymodule_function 63
+op sub __tmp311 __tmp311 1
+write __tmp298 memorymodule_function __tmp311
+write __tmp311 memorymodule_function 63
+set @counter 408
+read __tmp318 memorymodule_function 63
+op add __tmp318 __tmp318 1
+write __tmp318 memorymodule_function 63
+sensor __tmp325 @unit @itemCapacity
+ucontrol itemTake variablecore resname __tmp325 0 0
+set __tmp326 1
+set __tmp327 2
+read __tmp328 memorymodule_function 63
+op sub __tmp328 __tmp328 1
+write 320 memorymodule_function __tmp328
+write __tmp328 memorymodule_function 63
+read __tmp334 memorymodule_function 63
+op sub __tmp334 __tmp334 1
+write __tmp326 memorymodule_function __tmp334
+write __tmp334 memorymodule_function 63
+read __tmp340 memorymodule_function 63
+op sub __tmp340 __tmp340 1
+write __tmp327 memorymodule_function __tmp340
+write __tmp340 memorymodule_function 63
+set @counter 408
+read __tmp347 memorymodule_function 63
+op add __tmp347 __tmp347 1
+write __tmp347 memorymodule_function 63
+set __tmp354 6
+ucontrol approach bldngx bldngy __tmp354 0 0
+sensor unitx @unit @x
+sensor unity @unit @y
+read __tmp357 memorymodule_function 63
+op sub __tmp357 __tmp357 1
+write 348 memorymodule_function __tmp357
+write __tmp357 memorymodule_function 63
+read __tmp363 memorymodule_function 63
+op sub __tmp363 __tmp363 1
+write unitx memorymodule_function __tmp363
+write __tmp363 memorymodule_function 63
+read __tmp369 memorymodule_function 63
+op sub __tmp369 __tmp369 1
+write unity memorymodule_function __tmp369
+write __tmp369 memorymodule_function 63
+read __tmp375 memorymodule_function 63
+op sub __tmp375 __tmp375 1
+write bldngx memorymodule_function __tmp375
+write __tmp375 memorymodule_function 63
+read __tmp381 memorymodule_function 63
+op sub __tmp381 __tmp381 1
+write bldngy memorymodule_function __tmp381
+write __tmp381 memorymodule_function 63
+set @counter 466
+read __tmp388 memorymodule_function 63
+op add __tmp388 __tmp388 1
+write __tmp388 memorymodule_function 63
+read dist memorymodule_main 33
+op idiv time dist 20.25
+set __tmp399 10
+read __tmp400 memorymodule_function 63
+op sub __tmp400 __tmp400 1
+write 367 memorymodule_function __tmp400
+write __tmp400 memorymodule_function 63
+read __tmp406 memorymodule_function 63
+op sub __tmp406 __tmp406 1
+write time memorymodule_function __tmp406
+write __tmp406 memorymodule_function 63
+read __tmp412 memorymodule_function 63
+op sub __tmp412 __tmp412 1
+write __tmp399 memorymodule_function __tmp412
+write __tmp412 memorymodule_function 63
+set @counter 408
+read __tmp419 memorymodule_function 63
+op add __tmp419 __tmp419 1
+write __tmp419 memorymodule_function 63
+sensor __tmp426 @unit @totalItems
+op sub resToDelivery resToDelivery __tmp426
+sensor __tmp428 @unit @totalItems
+ucontrol itemDrop bldng __tmp428 0 0 0
+set __tmp429 1
+set __tmp430 2
+read __tmp431 memorymodule_function 63
+op sub __tmp431 __tmp431 1
+write 389 memorymodule_function __tmp431
+write __tmp431 memorymodule_function 63
+read __tmp437 memorymodule_function 63
+op sub __tmp437 __tmp437 1
+write __tmp429 memorymodule_function __tmp437
+write __tmp437 memorymodule_function 63
+read __tmp443 memorymodule_function 63
+op sub __tmp443 __tmp443 1
+write __tmp430 memorymodule_function __tmp443
+write __tmp443 memorymodule_function 63
+set @counter 408
+read __tmp450 memorymodule_function 63
+op add __tmp450 __tmp450 1
+write __tmp450 memorymodule_function 63
+set __tmp457 0
+ucontrol flag __tmp457 0 0 0 0
+jump 395 always 0 0
+jump 396 always 0 0
+jump 397 always 0 0
+jump 227 always 0 0
+jump 141 always 0 0
+jump 400 always 0 0
+jump 401 always 0 0
+op add iterator_link iterator_link 1
+getlink bldng iterator_link
+jump 83 always 0 0
+printflush message1
+jump 406 always 0 0
+jump 407 always 0 0
+end
+read __tmp462 memorymodule_function 63
+read __tmp461 memorymodule_function __tmp462
+op add __tmp462 __tmp462 1
+write __tmp462 memorymodule_function 63
+set usedTicks __tmp461
+read __tmp470 memorymodule_function 63
+read __tmp469 memorymodule_function __tmp470
+op add __tmp470 __tmp470 1
+write __tmp470 memorymodule_function 63
+set timeInSeconds __tmp469
+op mul __tmp477 timeInSeconds @ipt
+op mul instructioncount __tmp477 30
+set looper usedTicks
+jump 424 greaterThanEq looper instructioncount
+op add looper looper 1
+jump 421 always 0 0
+read __tmp484 memorymodule_function 63
+read __tmp483 memorymodule_function __tmp484
+op add __tmp484 __tmp484 1
+write __tmp484 memorymodule_function 63
+read __tmp491 memorymodule_function 63
+op sub __tmp491 __tmp491 1
+write null memorymodule_function __tmp491
+write __tmp491 memorymodule_function 63
+set @counter __tmp483
+end
+read __tmp498 memorymodule_function 63
+read __tmp497 memorymodule_function __tmp498
+op add __tmp498 __tmp498 1
+write __tmp498 memorymodule_function 63
+set name __tmp497
+set iterator_unit 2
+read iterator_unit_count_max memorymodule_unit 1
+set iterator_unit_count 0
+jump 456 greaterThanEq iterator_unit_count iterator_unit_count_max
+op add iterator_unit_count iterator_unit_count 1
+read __tmp512 memorymodule_unit iterator_unit
+jump 450 notEqual name __tmp512
+op add positionofresourcestmp iterator_unit 1
+write positionofresourcestmp memorymodule_main 32
+set iterator_unit_count iterator_unit_count_max
+jump 455 always 0 0
+op add iterator_unit iterator_unit 1
+read countofres memorymodule_unit iterator_unit
+op mul countofres countofres 2
+op add iterator_unit iterator_unit countofres
+op add iterator_unit iterator_unit 1
+jump 442 always 0 0
+read __tmp527 memorymodule_function 63
+read __tmp526 memorymodule_function __tmp527
+op add __tmp527 __tmp527 1
+write __tmp527 memorymodule_function 63
+read __tmp534 memorymodule_function 63
+op sub __tmp534 __tmp534 1
+write null memorymodule_function __tmp534
+write __tmp534 memorymodule_function 63
+set @counter __tmp526
+end
+read __tmp541 memorymodule_function 63
+read __tmp540 memorymodule_function __tmp541
+op add __tmp541 __tmp541 1
+write __tmp541 memorymodule_function 63
+set y2 __tmp540
+read __tmp549 memorymodule_function 63
+read __tmp548 memorymodule_function __tmp549
+op add __tmp549 __tmp549 1
+write __tmp549 memorymodule_function 63
+set x2 __tmp548
+read __tmp557 memorymodule_function 63
+read __tmp556 memorymodule_function __tmp557
+op add __tmp557 __tmp557 1
+write __tmp557 memorymodule_function 63
+set y1 __tmp556
+read __tmp565 memorymodule_function 63
+read __tmp564 memorymodule_function __tmp565
+op add __tmp565 __tmp565 1
+write __tmp565 memorymodule_function 63
+set x1 __tmp564
+op sub diffx x2 x1
+op sub diffy y2 y1
+op mul diffx diffx diffx
+op mul diffy diffy diffy
+op add tmpmy2 diffx diffy
+op sqrt tmpmy2 tmpmy2 0
+op floor tmpmy2 tmpmy2 0
+write tmpmy2 memorymodule_main 33
+read __tmp581 memorymodule_function 63
+read __tmp580 memorymodule_function __tmp581
+op add __tmp581 __tmp581 1
+write __tmp581 memorymodule_function 63
+read __tmp588 memorymodule_function 63
+op sub __tmp588 __tmp588 1
+write tmpmy2 memorymodule_function __tmp588
+write __tmp588 memorymodule_function 63
+set @counter __tmp580
+end
